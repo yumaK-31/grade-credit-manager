@@ -3,8 +3,28 @@ public class Subject {
    private int credit;
    private String grade;
 
+   public String getName(){
+      return this.name;
+   }
+
+   public void setName (String name){
+      this.name = name;
+   }
+
    public int getCredit(){
       return this.credit;
+   }
+
+   public void setCredit (int credit){
+      this.credit = credit;
+   }
+
+   public String getGrade(){
+      return this.grade;
+   }
+
+   public void setGrade(String grade){
+      this.grade = grade;
    }
 
    public Subject(String name, int credit, String grade) {

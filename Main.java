@@ -12,7 +12,7 @@ public class Main {
 
         int choice = 0;
 
-        while (choice != 5) {
+        while (choice != 7) {
 
             System.out.println("========================");
             
@@ -20,7 +20,9 @@ public class Main {
             System.out.println("2. 科目一覧を見る");
             System.out.println("3. 取得単位数を見る");
             System.out.println("4. GPAを見る");
-            System.out.println("5. 終了");
+            System.out.println("5. 科目を消去");
+            System.out.println("6. 科目の編集");
+            System.out.println("7. 終了");
 
             System.out.println("========================");
             System.out.print("番号を入力してください：");
@@ -50,7 +52,9 @@ public class Main {
                 case 2:
                     System.out.println("科目一覧を表示します");
 
-                    for (Subject subject : subjects) {
+                    for (int i = 0; i < subjects.size(); i++ ) {
+                        Subject subject = subjects.get(i);
+                        System.out.print(i+1 + ". ");
                         subject.showInfo();
                     }
                     break;
@@ -73,7 +77,7 @@ public class Main {
                 case 4:
                     int sumCredit = 0;
 
-                    if (sumCredit == 0) {
+                    if (subjects.size() == 0) {
                         System.out.println("まだ科目が登録されていません");
                     } else {
                     System.out.println("GPAを表示します");
@@ -82,8 +86,8 @@ public class Main {
                     
                     
                     for (Subject subject : subjects) {
-                        totalGradePoint += subject.getGradePoint() * subject.getCredit();
-                        sumCredit += subject.getCredit();
+                        totalGradePoint += subject.getGradePoint() * subject.getCredit();//GPAの数字換算*その科目の単位数
+                        sumCredit += subject.getCredit();//合計取得単位数
                     }
 
                     double gpa = totalGradePoint / sumCredit;
@@ -93,11 +97,51 @@ public class Main {
                     }
 
                 case 5:
+                    System.out.print("消去する科目の番号を入力してください: ");
+                    int deleteNumber = scanner.nextInt();
+
+                    if (deleteNumber >= 1 && deleteNumber <= subjects.size()){
+                        int deleteIndex = deleteNumber - 1; //消去したい科目の番号とArrayのIndex番号を合わせる
+
+                        Subject deleteSubject = subjects.get(deleteIndex); //消去する科目を参照
+
+                        subjects.remove(deleteIndex);
+                        System.out.println("「" + deleteSubject.getName() + "」を消去しました");
+
+                    } else {
+                        System.out.println("有効な数字を入力してください");
+                    }
+                break;  
+                
+                case 6:
+                    System.out.print("編集する科目の番号を入力してください：");
+                    int editNumber = scanner.nextInt();
+
+                    if (editNumber >= 1 && editNumber <= subjects.size()){
+                        int editIndex = editNumber - 1; //科目番号とインデックス番号を合わせる
+
+                        Subject editSubject = subjects.get(editIndex);
+
+                        System.out.print("新しい科目名：");//科目名の変更
+                        String newName = scanner.next();
+                        editSubject.setName(newName);
+
+                        System.out.print("新しい単位数：");//単位数の変更
+                        int newCredit = scanner.nextInt();
+                        editSubject.setCredit(newCredit);
+
+                        System.out.print("新しい成績：");//成績の変更
+                        String newGrade = scanner.next();
+                        editSubject.setGrade(newGrade);
+                    }
+                break;
+
+                case 7:
                     System.out.println("アプリを終了します");
-                    break;
+                break;
 
                 default:
-                    System.out.println("1〜5の番号を入力してください");
+                    System.out.println("1〜7の番号を入力してください");
             }
         }
         scanner.close();
