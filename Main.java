@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Subject> subjects = new ArrayList<>();
+        loadSubjects(subjects);//既存データの読み込み
+
 
         System.out.println("========================");
         System.out.println("   成績・単位管理アプリ");
@@ -137,6 +143,8 @@ public class Main {
                 break;
 
                 case 7:
+                    saveSubjects(subjects);//Array Listに入っているデータの保存
+                    System.out.println("保存しました。");
                     System.out.println("アプリを終了します");
                 break;
 
@@ -147,4 +155,30 @@ public class Main {
         scanner.close();
     }
     
+    public static void saveSubjects(ArrayList<Subject> subjects) throws IOException {
+        FileWriter writer = new FileWriter ("subjects.txt"); //fileを用意
+
+        for(Subject subject : subjects) { //fileに１行ずつ書き込み
+            writer.write(subject.getName() + ", " + subject.getCredit() + ", " + subject.getGrade() +  "\n");
+        }
+        writer.close();
+    }
+    
+    public static void loadSubjects(ArrayList<Subject> subjects) throws IOException{
+        BufferedReader br = new BufferedReader(new FileReader("subjects.txt"));
+
+        String line = br.readLine(); //名前, 単位数, 成績が文字列として１行取り出される
+        while(line != null){
+            String[] data = line.split(", ");//データを分割
+            String name = data[0];
+            int credit = Integer.parseInt(data[1]);//文字型から整数型に変換
+            String grade = data[2];
+
+            Subject subject = new Subject(name, credit, grade);//Subject型のオブジェクトを形成
+            subjects.add(subject);//Array Listに追加
+
+            line = br.readLine();//次の行を読み込み
+        }
+        br.close();
+    }
 }
