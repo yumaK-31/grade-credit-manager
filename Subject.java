@@ -2,6 +2,8 @@ public class Subject {
    private String name;
    private int credit;
    private String grade;
+   private int year;
+   private int quarter;
 
    public String getName(){
       return this.name;
@@ -27,14 +29,34 @@ public class Subject {
       this.grade = grade;
    }
 
-   public Subject(String name, int credit, String grade) {
+   public int getYear(){
+      return this.year;
+   }
+
+   public void setYear(int year){
+      this.year = year;
+   }
+
+   public int getQuarter(){
+      return this.quarter;
+   }
+
+   public void setQuarter(int quarter){
+      this.quarter = quarter;
+   }
+
+
+   public Subject(String name, int credit, String grade, int year, int quarter) {
       this.name = name;
       this.credit = credit;
       this.grade = grade;
+      this.year = year;
+      this.quarter = quarter;
    }
 
    public void showInfo() {
-    System.out.println("科目名：" + name + "/ 単位数：" + credit + "/ 成績：" + grade);
+    System.out.println("科目名：" + this.name + "/ 単位数：" + this.credit + "/ 成績：" + this.grade
+      + "/ 年度：" + this.year + "/ Q：" + this.quarter);
    }
 
    public double getGradePoint() {

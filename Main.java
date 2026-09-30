@@ -48,7 +48,13 @@ public class Main {
                     System.out.print("成績：");
                     String grade = scanner.next();
 
-                    Subject subject1 = new Subject(name, credit, grade);
+                    System.out.print("年度：");
+                    int year = scanner.nextInt();
+
+                    System.out.print("Q：");
+                    int quarter = scanner.nextInt();
+
+                    Subject subject1 = new Subject(name, credit, grade, year, quarter);
                     subjects.add(subject1); //Array Listに追加
 
                     subject1.showInfo();
@@ -139,6 +145,15 @@ public class Main {
                         System.out.print("新しい成績：");//成績の変更
                         String newGrade = scanner.next();
                         editSubject.setGrade(newGrade);
+
+                        System.out.print("新しい年度：");//年度の変更
+                        int newYear = scanner.nextInt();
+                        editSubject.setYear(newYear);
+
+                        System.out.print("新しいQuarter：");//Quarterの変更
+                        int newQuarter = scanner.nextInt();
+                        editSubject.setQuarter(newQuarter);
+
                     }
                 break;
 
@@ -159,7 +174,8 @@ public class Main {
         FileWriter writer = new FileWriter ("subjects.txt"); //fileを用意
 
         for(Subject subject : subjects) { //fileに１行ずつ書き込み
-            writer.write(subject.getName() + ", " + subject.getCredit() + ", " + subject.getGrade() +  "\n");
+            writer.write(subject.getName() + ", " + subject.getCredit() + ", " + subject.getGrade() + ", " 
+            + subject.getYear() + ", " + subject.getQuarter() + "\n");
         }
         writer.close();
     }
@@ -173,8 +189,10 @@ public class Main {
             String name = data[0];
             int credit = Integer.parseInt(data[1]);//文字型から整数型に変換
             String grade = data[2];
+            int year = Integer.parseInt(data[3]);
+            int quarter = Integer.parseInt(data[4]);
 
-            Subject subject = new Subject(name, credit, grade);//Subject型のオブジェクトを形成
+            Subject subject = new Subject(name, credit, grade, year, quarter);//Subject型のオブジェクトを形成
             subjects.add(subject);//Array Listに追加
 
             line = br.readLine();//次の行を読み込み
